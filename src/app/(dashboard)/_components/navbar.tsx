@@ -10,5 +10,5 @@ export function Navbar() {
       <MobileSidebar />
       <NavbarRoutes />
     </div>
-  );
+  )
 }
