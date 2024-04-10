@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "service": "docker-compose up",
+    "service-down": "docker-compose down",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -12,6 +14,7 @@
     "@clerk/localizations": "^1.28.2",
     "@clerk/nextjs": "^4.29.12",
     "@hookform/resolvers": "^3.3.4",
+    "@prisma/client": "^5.12.1",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
@@ -37,6 +40,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.1.4",
     "postcss": "^8",
+    "prisma": "^5.12.1",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
   }
