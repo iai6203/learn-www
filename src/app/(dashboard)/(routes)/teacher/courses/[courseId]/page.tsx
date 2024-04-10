@@ -6,6 +6,8 @@ import { LayoutDashboard } from "lucide-react"
 import { db } from "@/lib/db"
 import { IconBadge } from "@/components/icon-badge"
 
+import { TitleForm } from "./_components/title-form"
+
 export default async function CourseIdPage({
   params,
 }: {
@@ -54,6 +56,10 @@ export default async function CourseIdPage({
             <IconBadge icon={LayoutDashboard} />
             <h2 className="text-xl">강좌를 수정하세요.</h2>
           </div>
+          <TitleForm
+            initialData={course}
+            courseId={course.id}
+          />
         </div>
       </div>
     </div>
