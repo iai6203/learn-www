@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import localFont from "next/font/local"
 import { ClerkProvider } from "@clerk/nextjs"
 import { koKR } from "@clerk/localizations"
 
@@ -7,7 +7,14 @@ import { Toaster } from "@/components/ui/sonner"
 
 import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"] })
+const pretendardFont = localFont({
+  src: [
+    {
+      path: "../fonts/pretendard/PretendardVariable.woff2",
+      weight: "45 920",
+    }
+  ],
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,7 +29,7 @@ export default function RootLayout({
   return (
     <ClerkProvider localization={koKR}>
       <html lang="en">
-        <body className={inter.className}>
+        <body className={pretendardFont.className}>
           {children}
           <Toaster
             position="top-center"
