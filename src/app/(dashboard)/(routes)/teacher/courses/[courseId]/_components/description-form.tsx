@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
 import { Pencil } from "lucide-react"
+import type { Course } from "@prisma/client"
 
 import {
   Form,
@@ -21,9 +22,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 interface DescriptionFormProps {
-  initialData: {
-    description: string | null
-  }
+  initialData: Course
   courseId: string
 }
 
