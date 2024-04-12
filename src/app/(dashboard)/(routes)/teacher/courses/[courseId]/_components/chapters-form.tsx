@@ -7,7 +7,7 @@ import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
-import { PlusCircle } from "lucide-react"
+import { Loader2, PlusCircle } from "lucide-react"
 import type { Chapter, Course } from "@prisma/client"
 
 import {
@@ -20,6 +20,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+
+import { ChaptersList } from "./chapters-list"
 
 interface ChaptersFormProps {
   initialData: Course & { chapters: Chapter[] }
@@ -64,8 +66,35 @@ export function ChaptersForm({
     }
   }
 
+  const onEdit = (id: string) => {
+    router.push(`/teacher/courses/${courseId}/chapters/${id}`)
+  }
+
+  const onReorder = async (updateData: { id: string; position: number }[]) => {
+    try {
+      setIsUpdating(true)
+
+      await axios.put(`/api/courses/${courseId}/chapters/reorder`, {
+        list: updateData,
+      })
+      toast.success("챕터 순서가 변경되었습니다.")
+      router.refresh()
+    }
+    catch {
+      toast.error("알 수 없는 오류가 발생했습니다.")
+    }
+    finally {
+      setIsUpdating(false)
+    }
+  }
+
   return (
-    <div className="mt-6 border bg-slate-100 rounded-md p-4">
+    <div className="relative mt-6 border bg-slate-100 rounded-md p-4">
+      {isUpdating && (
+        <div className="absolute h-full w-full bg-slate-500/20 top-0 right-0 rounded-md flex items-center justify-center">
+          <Loader2 className="h-6 w-6 text-sky-700 animate-spin" />
+        </div>
+      )}
       <div className="font-medium flex items-center justify-between">
         챕터
         <Button
@@ -122,7 +151,11 @@ export function ChaptersForm({
           )}
         >
           {!initialData.chapters.length && "챕터 없음"}
-          {/* TODO: 챕터 목록 추가 */}
+          <ChaptersList
+            items={initialData.chapters || []}
+            onEdit={onEdit}
+            onReorder={onReorder}
+          />
         </div>
       )}
       {!isCreating && (
