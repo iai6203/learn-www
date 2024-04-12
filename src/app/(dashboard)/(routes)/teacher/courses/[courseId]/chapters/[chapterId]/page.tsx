@@ -8,6 +8,7 @@ import { IconBadge } from "@/components/icon-badge"
 import { db } from "@/lib/db"
 
 import { ChapterTitleForm } from "./_components/chapter-title-form"
+import { ChapterDescriptionForm } from "./_components/chapter-description-form"
 
 export default async function ChapterIdPage({
   params,
@@ -77,6 +78,11 @@ export default async function ChapterIdPage({
               <h2 className="text-xl">챕터를 수정하세요.</h2>
             </div>
             <ChapterTitleForm
+              initialData={chapter}
+              courseId={params.courseId}
+              chapterId={params.chapterId}
+            />
+            <ChapterDescriptionForm
               initialData={chapter}
               courseId={params.courseId}
               chapterId={params.chapterId}
