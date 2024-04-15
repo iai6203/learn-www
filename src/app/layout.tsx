@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs"
 import { koKR } from "@clerk/localizations"
 
 import { Toaster } from "@/components/ui/sonner"
+import { ConfettiProvider } from "@/components/providers/confetti-provider"
 
 import "./globals.css"
 
@@ -31,6 +32,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={pretendardFont.className}>
           {children}
+          <ConfettiProvider />
           <Toaster
             position="top-center"
           />

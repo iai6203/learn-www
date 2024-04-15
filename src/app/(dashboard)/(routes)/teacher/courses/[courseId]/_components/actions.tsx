@@ -8,21 +8,21 @@ import { Trash } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { ConfirmModal } from "@/components/modals/confirm-modal"
+import { useConfettiStore } from "@/hooks/use-confetti-store"
 
-interface ChapterActionsProps {
+interface ActionsProps {
   courseId: string
-  chapterId: string
   isPublished: boolean
   disabled: boolean
 }
 
-export function ChapterActions({
+export function Actions({
   courseId,
-  chapterId,
   isPublished,
   disabled,
-}: ChapterActionsProps) {
+}: ActionsProps) {
   const router = useRouter()
+  const confetti = useConfettiStore()
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -31,12 +31,13 @@ export function ChapterActions({
       setIsLoading(true)
 
       if (isPublished) {
-        await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/unpublish`)
-        toast.success("챕터가 비공개되었습니다.")
+        await axios.patch(`/api/courses/${courseId}/unpublish`)
+        toast.success("강좌가 비공개되었습니다.")
       }
       else {
-        await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/publish`)
-        toast.success("챕터가 공개되었습니다.")
+        await axios.patch(`/api/courses/${courseId}/publish`)
+        toast.success("강좌가 공개되었습니다.")
+        confetti.onOpen()
       }
 
       router.refresh()
@@ -53,9 +54,9 @@ export function ChapterActions({
     try {
       setIsLoading(true)
 
-      await axios.delete(`/api/courses/${courseId}/chapters/${chapterId}`)
-      toast.success("챕터가 삭제되었습니다.")
-      router.push(`/teacher/courses/${courseId}`)
+      await axios.delete(`/api/courses/${courseId}`)
+      toast.success("강좌가 삭제되었습니다.")
+      router.push(`/teacher/courses`)
       router.refresh()
     }
     catch {
