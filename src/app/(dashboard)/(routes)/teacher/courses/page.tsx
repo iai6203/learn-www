@@ -1,16 +1,29 @@
 import React from "react"
-import Link from "next/link"
+import { redirect } from "next/navigation"
+import { auth } from "@clerk/nextjs"
 
-import { Button } from "@/components/ui/button"
+import { db } from "@/lib/db"
 
-export default function CoursesPage() {
+import { DataTable } from "./_components/data-table"
+import { columns } from "./_components/columns"
+
+export default async function CoursesPage() {
+  const { userId } = auth()
+
+  if (!userId) {
+    return redirect("/")
+  }
+
+  const courses = await db.course.findMany({
+    where: { userId },
+    orderBy: {
+      createdAt: "desc",
+    },
+  })
+
   return (
     <div className="p-6">
-      <Button asChild>
-        <Link href="/teacher/create">
-          새로운 강좌
-        </Link>
-      </Button>
+      <DataTable columns={columns} data={courses} />
     </div>
   );
 }
