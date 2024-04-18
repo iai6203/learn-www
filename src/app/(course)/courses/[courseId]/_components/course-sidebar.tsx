@@ -3,6 +3,7 @@ import { redirect } from "next/navigation"
 import { auth } from "@clerk/nextjs"
 import type { Chapter, Course, UserProgress } from "@prisma/client"
 
+import { CourseProgress } from "@/components/course-progress"
 import { db } from "@/lib/db"
 
 import { CourseSidebarItem } from "./course-sidebar-item"
@@ -41,7 +42,14 @@ export async function CourseSidebar({
         <h1 className="font-semibold">
           {course.title}
         </h1>
-        {/* 구매 여부 확인 후 진척도 추가 */}
+        {purchase && (
+          <div className="mt-10">
+            <CourseProgress
+              variant="success"
+              value={progressCount}
+            />
+          </div>
+        )}
       </div>
       <div className="flex flex-col w-full">
         {course.chapters.map((chapter) => (

@@ -4,6 +4,7 @@ import Image from "next/image"
 import { BookOpen } from "lucide-react"
 
 import { IconBadge } from "@/components/icon-badge"
+import { CourseProgress } from "@/components/course-progress"
 import { formatPrice } from "@/lib/format"
 
 interface CourseCardProps {
@@ -53,7 +54,11 @@ export function CourseCard({
           </div>
           {progress !== null ? (
             <div>
-              Progress Component
+              <CourseProgress
+                variant={progress === 100 ? "success" : "default"}
+                size="sm"
+                value={progress}
+              />
             </div>
           ) : (
             <p className="text-md md:text-sm font-medium text-slate-700">

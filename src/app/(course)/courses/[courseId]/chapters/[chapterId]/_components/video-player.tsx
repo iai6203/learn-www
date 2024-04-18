@@ -29,7 +29,34 @@ export function VideoPlayer({
   isLocked,
   completeOnEnd,
 }: VideoPlayerProps) {
+  const router = useRouter()
+  const confetti = useConfettiStore()
+
   const [isReady, setIsReady] = useState(false)
+
+  const onEnd = async () => {
+    try {
+      if (completeOnEnd) {
+        await axios.put(`/api/courses/${courseId}/chapters/${chapterId}/progress`, {
+          isCompleted: true,
+        })
+
+        if (!nextChapterId) {
+          confetti.onOpen()
+        }
+
+        if (nextChapterId) {
+          router.push(`/courses/${courseId}/chapters/${nextChapterId}`)
+        }
+
+        toast.success("챕터 진행 상황이 저장되었습니다.")
+        router.refresh()
+      }
+    }
+    catch {
+      toast.error("알 수 없는 오류가 발생했습니다.")
+    }
+  }
 
   return (
     <div className="relative aspect-video">
@@ -55,7 +82,7 @@ export function VideoPlayer({
             !isReady && "hidden",
           )}
           onCanPlay={() => setIsReady(true)}
-          onEnded={() => {}}
+          onEnded={onEnd}
         />
       )}
     </div>

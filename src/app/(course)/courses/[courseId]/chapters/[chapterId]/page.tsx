@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator"
 import { getChapter } from "@/actions/get-chapter"
 
 import { VideoPlayer } from "./_components/video-player"
+import { CourseProgressButton } from "./_components/course-progress-button"
 import { CourseEnrollButton } from "./_components/course-enroll-button"
 
 export default async function ChapterIdPage({
@@ -75,7 +76,12 @@ export default async function ChapterIdPage({
               {chapter.title}
             </h2>
             {purchase ? (
-              <div />
+              <CourseProgressButton
+                courseId={params.courseId}
+                chapterId={params.chapterId}
+                nextChapterId={nextChapter?.id}
+                isCompleted={!!userProgress?.isCompleted}
+              />
             ) : (
               <CourseEnrollButton
                 courseId={params.courseId}
