@@ -5,11 +5,11 @@ import { SidebarRoutes } from "./sidebar-routes"
 
 export function Sidebar() {
   return (
-    <div className="h-full border-r flex flex-col overflow-y-auto bg-white shadow-sm">
+    <div className="h-full flex flex-col overflow-y-auto bg-[#121621] shadow-sm">
       <div className="p-6">
         <Logo />
       </div>
-      <div className="flex flex-col w-full">
+      <div className="px-4 flex flex-col w-full">
         <SidebarRoutes />
       </div>
     </div>
