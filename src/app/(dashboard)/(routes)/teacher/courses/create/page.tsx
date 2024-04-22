@@ -88,7 +88,7 @@ export default function CourseCreatePage() {
                   type="button"
                   asChild
                 >
-                  <Link href="">
+                  <Link href="/teacher/courses">
                     취소
                   </Link>
                 </Button>
